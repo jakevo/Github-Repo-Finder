@@ -10,16 +10,21 @@ import UIKit
 import MBProgressHUD
 
 // Main ViewController
-class RepoResultsViewController: UIViewController {
+class RepoResultsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     var searchBar: UISearchBar!
     var searchSettings = GithubRepoSearchSettings()
 
     var repos: [GithubRepo]!
 
+    @IBOutlet var tableview: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        tableview.dataSource = self
+        tableview.delegate = self
+        tableview.estimatedRowHeight = 500
+        //tableview.rowHeight = UITableViewAutomaticDimension
         // Initialize the UISearchBar
         searchBar = UISearchBar()
         searchBar.delegate = self
@@ -32,9 +37,43 @@ class RepoResultsViewController: UIViewController {
         doSearch()
     }
 
+    
+    
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.repos?.count ?? 0
+    }
+    
+    
+    // Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
+    // Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing controls)
+    
+    
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableview.dequeueReusableCell(withIdentifier: "cell") as! repoCell
+        
+        let possibleObjectRepo = self.repos?[indexPath.row]
+        
+        guard let objectRepo: GithubRepo = possibleObjectRepo else {
+            return UITableViewCell()
+        }
+        
+        cell.repoName.text = objectRepo.name
+        cell.forks.text = String(describing: objectRepo.forks!)//objectRepo?.forks
+        cell.stars.text = String (describing: objectRepo.stars!)
+        
+        cell.owner.text = objectRepo.ownerHandle
+        cell.descriptionLabel.text = objectRepo.repoDescription
+        
+        
+        return cell
+        
+        
+    }
+
     // Perform the search.
     fileprivate func doSearch() {
-
+        
         MBProgressHUD.showAdded(to: self.view, animated: true)
 
         // Perform request to GitHub API to get the list of repositories
@@ -42,12 +81,16 @@ class RepoResultsViewController: UIViewController {
 
             // Print the returned repositories to the output window
             for repo in newRepos {
+                
                 print(repo)
+                
             }   
-
+            self.repos = newRepos
+            self.tableview.reloadData()
+            
             MBProgressHUD.hide(for: self.view, animated: true)
             }, error: { (error) -> Void in
-                print(error)
+                print(error!)
         })
     }
 }
