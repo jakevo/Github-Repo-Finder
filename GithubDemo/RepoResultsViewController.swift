@@ -58,13 +58,16 @@ class RepoResultsViewController: UIViewController, UITableViewDataSource, UITabl
             return UITableViewCell()
         }
         
+        let imageRepo = URL(string: objectRepo.ownerAvatarURL!)
+        
+        
         cell.repoName.text = objectRepo.name
         cell.forks.text = String(describing: objectRepo.forks!)//objectRepo?.forks
         cell.stars.text = String (describing: objectRepo.stars!)
         
         cell.owner.text = objectRepo.ownerHandle
         cell.descriptionLabel.text = objectRepo.repoDescription
-        
+        cell.avatar.setImageWith(imageRepo!)
         
         return cell
         
