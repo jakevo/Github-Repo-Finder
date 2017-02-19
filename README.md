@@ -1,30 +1,44 @@
-# Lab 3 - *Name of App Here*
+# Yelp-Search-1.0
 
-**Name of your app** is a GitHub Repo search app using the [GitHub API](https://developer.github.com/v3/search/#search-repositories).
+#############
 
-Time spent: **X** hours spent in total
+# Project 3 - *Yelp-Search*
+
+**Yelp-Search** is a Yelp search app using the [Yelp API](http://www.yelp.com/developers/documentation/v2/search_api).
+
+Time spent: **15** hours spent in total
 
 ## User Stories
 
 The following **required** functionality is completed:
 
-- [ ] Table rows for search results should be dynamic height according to the content height.
-- [ ] Custom cells should have the proper Auto Layout constraints.
+- [x] Table rows for search results should be dynamic height according to the content height.
+- [x] Custom cells should have the proper Auto Layout constraints.
+- [x] Search bar should be in the navigation bar (doesn't have to expand to show location like the real Yelp app does).
+
+The following **optional** features are implemented:
+
+- [ ] Search results page
+   - [ ] Infinite scroll for restaurant results.
+   - [ ] Implement map view of restaurant results.
+- [ ] Implement the restaurant detail page.
 
 The following **additional** features are implemented:
 
-- [ ] List anything else that you can get done to improve the app functionality!
+- [x] List anything else that you can get done to improve the app functionality!
+    - [x] Display business around user's real location.
+    - [x] Users can search for all kinf of business around them not only the name in the table list
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
-1.
-2.
+1. Use user's location to display business around them
+2. Map view restaurant and give users option to navigate to the restautant they want.
 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='http://imgur.com/D8TWuE5.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
@@ -34,7 +48,7 @@ Describe any challenges encountered while building the app.
 
 ## License
 
-    Copyright [yyyy] [name of copyright owner]
+    Copyright [2017] [Jake Vo]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
