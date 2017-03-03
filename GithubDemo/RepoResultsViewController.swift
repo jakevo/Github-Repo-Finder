@@ -10,7 +10,7 @@ import UIKit
 import MBProgressHUD
 
 // Main ViewController
-class RepoResultsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class RepoResultsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, SettingsPresentingViewControllerDelegate {
 
     var searchBar: UISearchBar!
     var searchSettings = GithubRepoSearchSettings()
@@ -43,7 +43,6 @@ class RepoResultsViewController: UIViewController, UITableViewDataSource, UITabl
         return self.repos?.count ?? 0
     }
     
-    
     // Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
     // Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing controls)
     
@@ -73,6 +72,28 @@ class RepoResultsViewController: UIViewController, UITableViewDataSource, UITabl
         
         
     }
+    func didCancelSettings() {
+        print("just cancel")
+    }
+    
+    func didSaveSettings(settings: GithubRepoSearchSettings) {
+        self.searchSettings = settings
+        doSearch()
+        print("good")
+    }
+
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let navController = segue.destination as! UINavigationController
+        let vc = navController.topViewController as! SearchSettingViewController
+        //searchSettings.minStars = 0
+        
+        vc.settings = searchSettings
+        
+        vc.delegate = self
+    }
+   
+
 
     // Perform the search.
     fileprivate func doSearch() {
@@ -83,11 +104,7 @@ class RepoResultsViewController: UIViewController, UITableViewDataSource, UITabl
         GithubRepo.fetchRepos(searchSettings, successCallback: { (newRepos) -> Void in
 
             // Print the returned repositories to the output window
-            for repo in newRepos {
-                
-                print(repo)
-                
-            }   
+            
             self.repos = newRepos
             self.tableview.reloadData()
             
@@ -97,6 +114,8 @@ class RepoResultsViewController: UIViewController, UITableViewDataSource, UITabl
         })
     }
 }
+
+
 
 // SearchBar methods
 extension RepoResultsViewController: UISearchBarDelegate {
@@ -122,3 +141,4 @@ extension RepoResultsViewController: UISearchBarDelegate {
         doSearch()
     }
 }
+

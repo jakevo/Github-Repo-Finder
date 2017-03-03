@@ -73,6 +73,8 @@ class GithubRepo: CustomStringConvertible {
         }
     }
     
+  
+    
     // Helper method that constructs a dictionary of the query parameters used in the request to the
     // GitHub API
     fileprivate class func queryParamsWithSettings(_ settings: GithubRepoSearchSettings) -> [String: String] {
